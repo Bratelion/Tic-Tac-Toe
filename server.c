@@ -7,7 +7,7 @@
 #include <sys/socket.h> 
 #include <sys/types.h>
 #define MAX 80 
-#define IP  "161.53.171.106"
+#define IP  "127.0.0.1"
 #define PORT 50555 
 #define SA struct sockaddr
 
