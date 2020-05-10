@@ -52,7 +52,7 @@ void func(int sockfd)
 
         // Print Game array
         printf("Placed X on (%d, %d)\n", coords[0], coords[1]);
-        printf("\t\t--- --- ---\n");
+        printf("\n\n");
         printf("\t\t %s | %s | %s \n", game[0][0], game[0][1], game[0][2]);
         printf("\t\t--- --- ---\n");
         printf("\t\t %s | %s | %s \n", game[1][0], game[1][1], game[1][2]);
@@ -60,19 +60,7 @@ void func(int sockfd)
         printf("\t\t %s | %s | %s \n\n", game[2][0], game[2][1], game[2][2]);
 
         // End game Winner Check!
-        if((game[0][0] == "X" && game[0][1] == "X" && game[0][2] == "X") || 	// hor
-			(game[1][0] == "X" && game[1][1] == "X" && game[1][2] == "X") ||
-			(game[2][0] == "X" && game[2][1] == "X" && game[2][2] == "X") ||
-			(game[0][0] == "X" && game[1][0] == "X" && game[2][0] == "X") ||	// ver
-			(game[0][1] == "X" && game[1][1] == "X" && game[2][1] == "X") ||
-			(game[0][2] == "X" && game[1][2] == "X" && game[2][2] == "X") ||
-			(game[0][0] == "X" && game[1][1] == "X" && game[2][2] == "X") ||	// diagonal
-			(game[0][2] == "X" && game[1][1] == "X" && game[2][0] == "X")){
-
-				printf("Winner is Client!\n");
-				break;
-		}
-		else if((game[0][0] == "O" && game[0][1] == "O" && game[0][2] == "O") || 	// hor
+        if((game[0][0] == "O" && game[0][1] == "O" && game[0][2] == "O") || 	// hor
 			(game[1][0] == "O" && game[1][1] == "O" && game[1][2] == "O") ||
 			(game[2][0] == "O" && game[2][1] == "O" && game[2][2] == "O") ||
 			(game[0][0] == "O" && game[1][0] == "O" && game[2][0] == "O") ||	// ver
@@ -82,6 +70,18 @@ void func(int sockfd)
 			(game[0][2] == "O" && game[1][1] == "O" && game[2][0] == "O")){
 
 				printf("Winner is Server!\n");
+				break;
+		}
+		else if((game[0][0] == "X" && game[0][1] == "X" && game[0][2] == "X") || 	// hor
+			(game[1][0] == "X" && game[1][1] == "X" && game[1][2] == "X") ||
+			(game[2][0] == "X" && game[2][1] == "X" && game[2][2] == "X") ||
+			(game[0][0] == "X" && game[1][0] == "X" && game[2][0] == "X") ||	// ver
+			(game[0][1] == "X" && game[1][1] == "X" && game[2][1] == "X") ||
+			(game[0][2] == "X" && game[1][2] == "X" && game[2][2] == "X") ||
+			(game[0][0] == "X" && game[1][1] == "X" && game[2][2] == "X") ||	// diagonal
+			(game[0][2] == "X" && game[1][1] == "X" && game[2][0] == "X")){
+
+				printf("Winner is Client!\n");
 				break;
 		}
         else if(counter == 9){
@@ -101,7 +101,7 @@ void func(int sockfd)
 
         // Print Game array
         printf("Server placed O on (%d, %d)\n", coords[0], coords[1]);
-        printf("\t\t--- --- ---\n");
+        printf("\n\n");
         printf("\t\t %s | %s | %s \n", game[0][0], game[0][1], game[0][2]);
         printf("\t\t--- --- ---\n");
         printf("\t\t %s | %s | %s \n", game[1][0], game[1][1], game[1][2]);
