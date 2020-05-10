@@ -35,7 +35,7 @@ void func(int sockfd)
 
         printf("Client placed X on (%d, %d)\n", coords[0], coords[1]);
           
-        printf("\t\t--- --- ---\n");
+        printf("\n\n");
         printf("\t\t %s | %s | %s \n", game[0][0], game[0][1], game[0][2]);
         printf("\t\t--- --- ---\n");
         printf("\t\t %s | %s | %s \n", game[1][0], game[1][1], game[1][2]);
@@ -55,7 +55,7 @@ void func(int sockfd)
 				printf("Winner is Client!\n");
 				break;
 		}
-		else if((game[0][0] == "O" && game[0][1] == "O" && game[0][2] == "O") || 	// hor
+		if((game[0][0] == "O" && game[0][1] == "O" && game[0][2] == "O") || 	// hor
 			(game[1][0] == "O" && game[1][1] == "O" && game[1][2] == "O") ||
 			(game[2][0] == "O" && game[2][1] == "O" && game[2][2] == "O") ||
 			(game[0][0] == "O" && game[1][0] == "O" && game[2][0] == "O") ||	// ver
@@ -89,7 +89,7 @@ void func(int sockfd)
 
                 printf("Placed O on (%d, %d)\n", coords[0], coords[1]);
           
-                printf("\t\t--- --- ---\n");
+                printf("\n\n");
                 printf("\t\t %s | %s | %s \n", game[0][0], game[0][1], game[0][2]);
                 printf("\t\t--- --- ---\n");
                 printf("\t\t %s | %s | %s \n", game[1][0], game[1][1], game[1][2]);
