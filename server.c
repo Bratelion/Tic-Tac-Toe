@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <time.h> 
 #include <netdb.h> 
 #include <netinet/in.h> 
@@ -14,6 +15,49 @@
 char* game[3][3];
 int counter;
 int coords[2];
+
+//Function to check for Winner
+bool checkGame(){
+	if((game[0][0] == "X" && game[0][1] == "X" && game[0][2] == "X") || 	// hor
+			(game[1][0] == "X" && game[1][1] == "X" && game[1][2] == "X") ||
+			(game[2][0] == "X" && game[2][1] == "X" && game[2][2] == "X") ||
+			(game[0][0] == "X" && game[1][0] == "X" && game[2][0] == "X") ||	// ver
+			(game[0][1] == "X" && game[1][1] == "X" && game[2][1] == "X") ||
+			(game[0][2] == "X" && game[1][2] == "X" && game[2][2] == "X") ||
+			(game[0][0] == "X" && game[1][1] == "X" && game[2][2] == "X") ||	// diagonal
+			(game[0][2] == "X" && game[1][1] == "X" && game[2][0] == "X")){
+
+				printf("Winner is Client!\n");
+				return true;
+		}
+	else if((game[0][0] == "O" && game[0][1] == "O" && game[0][2] == "O") || 	// hor
+		(game[1][0] == "O" && game[1][1] == "O" && game[1][2] == "O") ||
+		(game[2][0] == "O" && game[2][1] == "O" && game[2][2] == "O") ||
+		(game[0][0] == "O" && game[1][0] == "O" && game[2][0] == "O") ||	// ver
+		(game[0][1] == "O" && game[1][1] == "O" && game[2][1] == "O") ||
+		(game[0][2] == "O" && game[1][2] == "O" && game[2][2] == "O") ||
+		(game[0][0] == "O" && game[1][1] == "O" && game[2][2] == "O") ||	// diagonal
+		(game[0][2] == "O" && game[1][1] == "O" && game[2][0] == "O")){
+
+			printf("Winner is Server!\n");
+			return true;
+	}
+	else if(counter == 9){
+			printf("It's a Draw!\n");
+			return true;
+		}
+	return false;
+}
+
+// Function to print Game board
+void printGame(){
+	printf("\n\n");
+	printf("\t\t %s | %s | %s \n", game[0][0], game[0][1], game[0][2]);
+	printf("\t\t--- --- ---\n");
+	printf("\t\t %s | %s | %s \n", game[1][0], game[1][1], game[1][2]);
+	printf("\t\t--- --- ---\n");
+	printf("\t\t %s | %s | %s \n\n", game[2][0], game[2][1], game[2][2]);
+}
 
 // Function designed for game between client and server. 
 void func(int sockfd) 
@@ -34,43 +78,10 @@ void func(int sockfd)
 		counter++;
 
         printf("Client placed X on (%d, %d)\n", coords[0], coords[1]);
-          
-        printf("\n\n");
-        printf("\t\t %s | %s | %s \n", game[0][0], game[0][1], game[0][2]);
-        printf("\t\t--- --- ---\n");
-        printf("\t\t %s | %s | %s \n", game[1][0], game[1][1], game[1][2]);
-        printf("\t\t--- --- ---\n");
-        printf("\t\t %s | %s | %s \n\n", game[2][0], game[2][1], game[2][2]);
+		printGame();
 
 		// End game Winner Check!
-		if((game[0][0] == "X" && game[0][1] == "X" && game[0][2] == "X") || 	// hor
-			(game[1][0] == "X" && game[1][1] == "X" && game[1][2] == "X") ||
-			(game[2][0] == "X" && game[2][1] == "X" && game[2][2] == "X") ||
-			(game[0][0] == "X" && game[1][0] == "X" && game[2][0] == "X") ||	// ver
-			(game[0][1] == "X" && game[1][1] == "X" && game[2][1] == "X") ||
-			(game[0][2] == "X" && game[1][2] == "X" && game[2][2] == "X") ||
-			(game[0][0] == "X" && game[1][1] == "X" && game[2][2] == "X") ||	// diagonal
-			(game[0][2] == "X" && game[1][1] == "X" && game[2][0] == "X")){
-
-				printf("Winner is Client!\n");
-				break;
-		}
-		else if((game[0][0] == "O" && game[0][1] == "O" && game[0][2] == "O") || 	// hor
-			(game[1][0] == "O" && game[1][1] == "O" && game[1][2] == "O") ||
-			(game[2][0] == "O" && game[2][1] == "O" && game[2][2] == "O") ||
-			(game[0][0] == "O" && game[1][0] == "O" && game[2][0] == "O") ||	// ver
-			(game[0][1] == "O" && game[1][1] == "O" && game[2][1] == "O") ||
-			(game[0][2] == "O" && game[1][2] == "O" && game[2][2] == "O") ||
-			(game[0][0] == "O" && game[1][1] == "O" && game[2][2] == "O") ||	// diagonal
-			(game[0][2] == "O" && game[1][1] == "O" && game[2][0] == "O")){
-
-				printf("Winner is Server!\n");
-				break;
-		}
-		else if(counter == 9){
-			printf("It's a Draw!\n");
-			break;
-		}
+		if(checkGame()) break;
 
 		// Clear Buffer
 		bzero(buff, MAX); 
@@ -90,45 +101,12 @@ void func(int sockfd)
 
                 printf("Placed O on (%d, %d)\n", coords[0], coords[1]);
           
-                printf("\n\n");
-                printf("\t\t %s | %s | %s \n", game[0][0], game[0][1], game[0][2]);
-                printf("\t\t--- --- ---\n");
-                printf("\t\t %s | %s | %s \n", game[1][0], game[1][1], game[1][2]);
-                printf("\t\t--- --- ---\n");
-                printf("\t\t %s | %s | %s \n\n", game[2][0], game[2][1], game[2][2]);
+                printGame();
 				break;
             }
         }
  		// End game Winner Check!
-		if((game[0][0] == "X" && game[0][1] == "X" && game[0][2] == "X") || 	// hor
-			(game[1][0] == "X" && game[1][1] == "X" && game[1][2] == "X") ||
-			(game[2][0] == "X" && game[2][1] == "X" && game[2][2] == "X") ||
-			(game[0][0] == "X" && game[1][0] == "X" && game[2][0] == "X") ||	// ver
-			(game[0][1] == "X" && game[1][1] == "X" && game[2][1] == "X") ||
-			(game[0][2] == "X" && game[1][2] == "X" && game[2][2] == "X") ||
-			(game[0][0] == "X" && game[1][1] == "X" && game[2][2] == "X") ||	// diagonal
-			(game[0][2] == "X" && game[1][1] == "X" && game[2][0] == "X")){
-
-				printf("Winner is Client!\n");
-				break;
-		}
-		else if((game[0][0] == "O" && game[0][1] == "O" && game[0][2] == "O") || 	// hor
-			(game[1][0] == "O" && game[1][1] == "O" && game[1][2] == "O") ||
-			(game[2][0] == "O" && game[2][1] == "O" && game[2][2] == "O") ||
-			(game[0][0] == "O" && game[1][0] == "O" && game[2][0] == "O") ||	// ver
-			(game[0][1] == "O" && game[1][1] == "O" && game[2][1] == "O") ||
-			(game[0][2] == "O" && game[1][2] == "O" && game[2][2] == "O") ||
-			(game[0][0] == "O" && game[1][1] == "O" && game[2][2] == "O") ||	// diagonal
-			(game[0][2] == "O" && game[1][1] == "O" && game[2][0] == "O")){
-
-				printf("Winner is Server!\n");
-				break;
-		}
-		else if(counter == 9){
-			printf("It's a Draw!\n");
-			break;
-		}
-        
+		if(checkGame()) break;        
 	} 
 }
 
